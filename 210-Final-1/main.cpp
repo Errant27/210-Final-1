@@ -44,15 +44,25 @@ void insert(string nam, string ord) {
 
 void print_booth() {
     Customer* current = head;
-    
     if (!current) {
         cout << "Line is empty." << endl;
         return;
     }
-    
     while (current) {
         cout << current->name << " ordered a " << current->order << endl;
         current = current->next;
+    }
+}
+
+void help_customer() {
+    Customer* current = head;
+    if(!head)
+        cout << "No update\n";
+    else {
+        head = head->next;
+        cout << current->name << " helped from the front of the line\n";
+        delete current;
+        current = nullptr;
     }
 }
 
@@ -64,14 +74,15 @@ int main() {
     string order;
     
     string names[5] = {"Daniel", "Erica", "Lily", "Monique", "Nathan"};
-    string drinks[5] = {"Coffee", "Latte", "Espresso", "Drink", "Drink"};
+    string drinks[5] = {"Coffee", "Latte", "Espresso", "Tea", "Drink"};
     
     for (int i = 0; i < 3; i++) {
-        int num = rand_num();
+        random_device randNum;
+        uniform_int_distribution<int>range(0, 4);
+        int num = range(randNum);
         
         name = names[num];
         order = drinks[num];
-        
         booth.insert(name, order);
     }
     cout << "---------\n";
@@ -80,13 +91,38 @@ int main() {
     booth.print_booth();
     cout << "---------\n";
     
+    for (int i = 0; i < 10; ++i) {
+        static int sim = 1;
+        
+        cout << "Time interval #" << sim << endl;
+        int event = rand_num();
+        booth.help_customer();
+        
+        cout << "---------" << endl;
+        cout << "Updates:" << endl;
+        
+        if (event < 50) {
+            random_device randNum;
+            uniform_int_distribution<int>range(0, 4);
+            int num = range(randNum);
+            
+            name = names[num];
+            order = drinks[num];
+            booth.insert(name, order);
+        }
+        
+        cout << "Resulting Line:" << endl;
+        booth.print_booth();
+        sim++;
+    }
+    
     
     return 0;
 }
 
-int rand_num() {    // Function to generate random number
+int rand_num() {
     random_device randNum;
-    uniform_int_distribution<int>range(0, 4);
+    uniform_int_distribution<int>range(1, 100);
     int num = range(randNum);
     
     return num;
