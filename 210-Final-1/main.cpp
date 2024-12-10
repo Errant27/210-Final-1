@@ -26,13 +26,18 @@ private:
 public:
 CoffeeBooth() { head = nullptr; }
     
-void push_back(string nam, string ord) {
+void insert(string nam, string ord) {
     Customer *newCustomer = new Customer(nam, ord);
     if(!head) {
          head = newCustomer;
+        cout << setw(W) << newCustomer->name << " added to the line" << endl;
     }
     else {
-        head->next = newCustomer;
+        Customer *ptr = head;
+        while (ptr->next != nullptr)
+            ptr = ptr->next;
+        ptr->next = newCustomer;
+        newCustomer->next = nullptr;
         cout << setw(W) << newCustomer->name << " added to the line" << endl;
     }
 }
@@ -67,9 +72,7 @@ int main() {
         name = names[num];
         order = drinks[num];
         
-        cout << name << " " << order << endl;
-        
-        booth.push_back(name, order);
+        booth.insert(name, order);
     }
     cout << "---------\n";
     
