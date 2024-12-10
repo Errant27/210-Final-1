@@ -10,24 +10,28 @@ int rand_num();
 
 struct CoffeeBooth {
 private:
-    string name;
-    string order;
-    CoffeeBooth(string na, string ord, CoffeeBooth* n = nullptr) {
-        name = na;
-        order = ord;
-    }
+    struct Customer{
+        string name;
+        string order;
+        Customer* next;
+        Customer(string na, string ord, Customer* n = nullptr) {
+            name = na;
+            order = ord;
+            next = n;
+        }
+    };
     
-    CoffeeBooth *head;
-    CoffeeBooth *next;
-
+    Customer *head;
+        
 public:
 CoffeeBooth() { head = nullptr; }
     
 void push_back(string nam, string ord) {
-    CoffeeBooth *newCustomer = new CoffeeBooth(nam, ord);
+    Customer *newCustomer = new Customer(nam, ord);
     
-    if(!head)
+    if(!head) {
         head = newCustomer;
+    }
     else {
         head->next = newCustomer;
 //        cout << setw(W) << newCustomer->name << " added to the line" << endl;
@@ -35,16 +39,15 @@ void push_back(string nam, string ord) {
 }
 
 void print_booth() {
-    CoffeeBooth* current = head;
+    Customer* current = head;
     if (!current) {
         cout << "Line is empty." << endl;
         return;
     }
     while (current) {
-        cout << current->name << "ordered a " << current->order << endl;
+        cout << current->name << " ordered a " << current->order << endl;
         current = current->next;
     }
-    cout << endl;
 }
 
 };
@@ -55,21 +58,20 @@ int main() {
     string order;
     
     string names[5] = {"Daniel", "Erica", "Lily", "Monique", "Nathan"};
-    string drinks[3] = {"Coffee", "Latte", "Espresso"};
+//    string drinks[3] = {"Coffee", "Latte", "Espresso"};
     
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 3; ++i) {
         int num = rand_num();
         
         name = names[num];
-        order = drinks[num];
-        cout << name << " " << order << endl;
+        order = "coffee";
         
         booth.push_back(name, order);
     }
     
-//    cout << "Coffee Booth Initial cue:\n";
-//    cout << "---------\n";
-//    booth.print_booth();
+    cout << "Coffee Booth Initial cue:\n";
+    booth.print_booth();
+    cout << "---------\n";
     
     
     return 0;
