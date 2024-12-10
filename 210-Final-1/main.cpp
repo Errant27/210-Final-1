@@ -1,14 +1,38 @@
-//
-//  main.cpp
-//  210-Final-1
-//
-//  Created by Neil Orton on 12/9/24.
-//
-
+// 210 | Final | Neil Orton
+// IDE used: Xcode
 #include <iostream>
+#include <deque>
+using namespace std;
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+struct CoffeeBooth {
+private:
+    string name;
+    string order;
+    CoffeeBooth(string na, string ord, CoffeeBooth* n = nullptr) {
+        name = na;
+        order = ord;
+    }
+    
+    CoffeeBooth *head;
+    CoffeeBooth *next;
+
+public:
+void push_back(string nam, string ord) {
+    CoffeeBooth *newCustomer = new CoffeeBooth(nam, ord);
+    if(!head)
+        head = newCustomer;
+    else
+
+}
+
+};
+
+int main() {
+    
+    string names[5] = {"Daniel", "Erica", "Lily", "Moique", "Nathan"};
+    string drinks[3] = {"Coffee", "Latte", "Espresso"};
+    
+    
+    
     return 0;
 }
