@@ -25,37 +25,51 @@ CoffeeBooth() { head = nullptr; }
     
 void push_back(string nam, string ord) {
     CoffeeBooth *newCustomer = new CoffeeBooth(nam, ord);
+    
     if(!head)
         head = newCustomer;
     else {
         head->next = newCustomer;
-        cout << setw(W) << newCustomer->name << " added to the line" << endl;
+//        cout << setw(W) << newCustomer->name << " added to the line" << endl;
     }
 }
 
 void print_booth() {
-        
+    CoffeeBooth* current = head;
+    if (!current) {
+        cout << "Line is empty." << endl;
+        return;
+    }
+    while (current) {
+        cout << current->name << "ordered a " << current->order << endl;
+        current = current->next;
+    }
+    cout << endl;
 }
 
 };
 
 int main() {
-    
     CoffeeBooth booth;
     string name;
     string order;
     
-    string names[5] = {"Daniel", "Erica", "Lily", "Moique", "Nathan"};
+    string names[5] = {"Daniel", "Erica", "Lily", "Monique", "Nathan"};
     string drinks[3] = {"Coffee", "Latte", "Espresso"};
     
-    cout << "Coffee Booth Initial cue:\n";
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 4; ++i) {
         int num = rand_num();
+        
         name = names[num];
         order = drinks[num];
+        cout << name << " " << order << endl;
         
         booth.push_back(name, order);
     }
+    
+//    cout << "Coffee Booth Initial cue:\n";
+//    cout << "---------\n";
+//    booth.print_booth();
     
     
     return 0;
