@@ -3,7 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <deque>
-#inlcude <vector>
+#include <vector>
 #include <list>
 #include <random>
 using namespace std;
@@ -71,12 +71,6 @@ void help_customer() {
 struct Customer {
     string name;
     string order;
-    Customer* next;
-    Customer(string na, string ord, Customer* n = nullptr) {
-        name = na;
-        order = ord;
-        next = n;
-    }
 };
 
 Customer *head;
@@ -131,26 +125,24 @@ int main() {
     }
     
     // Muffin Booth
-    deque<string> muffinBooth;
-    string muf_name;
-//    string muf_order;
-    
-//    string muffins[7] = {"Blueberry", "Strawberry", "Coffee", "Poppyseed", "Water", "Chocolate", "Hazelnut"};
+    deque<Customer> muffinBooth;
+    string muffins[7] = {"Blueberry", "Strawberry", "Coffee", "Poppyseed", "Water", "Chocolate", "Hazelnut"};
     
     for (int i = 0; i < 3; i++) {
         random_device randNum;
         uniform_int_distribution<int>range(0, 6);
         int num = range(randNum);
+        Customer newMufCust;
         
-        muf_name = names[num];
-//        muf_order = muffins[num];
-        muffinBooth.push_back(muf_name);
+        newMufCust.name = names[num];
+        newMufCust.order = muffins[num];
+        muffinBooth.push_back(newMufCust);
     }
     cout << "---------\n";
     
     cout << "Muffin Booth Initial cue:\n";
     for (int i = 0; i < muffinBooth.size(); i++) {
-        cout << muffinBooth[i] << endl;
+        cout << muffinBooth[i].name << "ordered a " << muffinBooth[i].order << endl;
     }
     cout << "---------\n";
     
@@ -161,7 +153,7 @@ int main() {
         int event = rand_num();
         cout << "[Updates]" << endl;
         if (muffinBooth.size() > 0) {
-            cout << muffinBooth[0] << " helped\n";
+            cout << muffinBooth[0].name << " helped\n";
             muffinBooth.pop_front();
         }
         
@@ -170,10 +162,11 @@ int main() {
             random_device randNum;
             uniform_int_distribution<int>range(0, 6);
             int num = range(randNum);
+            Customer newMufCust;
             
-            muf_name = names[num];
-    //        muf_order = muffins[num];
-            muffinBooth.push_back(muf_name);
+            newMufCust.name = names[num];
+            newMufCust.order = muffins[num];
+            muffinBooth.push_back(newMufCust);
         }
         else
             cout << "No other updates\n";
@@ -181,7 +174,7 @@ int main() {
         cout << "[Resulting Line]" << endl;
         if (muffinBooth.size() != 0) {
             for (int i = 0; i < muffinBooth.size(); i++) {
-                cout << muffinBooth[i] << endl;
+                cout << muffinBooth[i].name << "ordered a " << muffinBooth[i].order << endl;
             }
         }
         else
@@ -190,21 +183,21 @@ int main() {
         sim++;
     }
     
-    // Bracelet Booth
-    vector<string> bracletBooth;
-    string brac_name;
-//    string brac_order;
-    
-//    string bracelets[7] = {"Blueberry", "Strawberry", "Coffee", "Poppyseed", "Water", "Chocolate", "Hazelnut"};
+// Bracelet Booth
+    vector<Customers> bracletBooth;
+    string muffins[7] = {"Blue", "Red", "Violet", "Teal", "Green", "White", "Pink"};
     
     for (int i = 0; i < 3; i++) {
         random_device randNum;
         uniform_int_distribution<int>range(0, 6);
         int num = range(randNum);
+        Customer newBracCust;
         
-        brac_name = names[num];
-//        muf_order = muffins[num];
-        bracletBooth.push_back(brac_name);
+        Customer newBracCust;
+        
+        newBracCust.name = names[num];
+        newBracCust.order = muffins[num];
+        bracletBooth.push_back(newBracCust);
     }
     cout << "---------\n";
     
@@ -221,7 +214,7 @@ int main() {
         int event = rand_num();
         cout << "[Updates]" << endl;
         if (bracletBooth.size() > 0) {
-            cout << muffinBooth[0] << " helped\n";
+            cout << bracletBooth[0] << " helped\n";
             bracletBooth.pop_back();
         }
         
@@ -231,9 +224,8 @@ int main() {
             uniform_int_distribution<int>range(0, 6);
             int num = range(randNum);
             
-            muf_name = names[num];
-    //        muf_order = muffins[num];
-            bracletBooth.push_back(muf_name);
+            brac_name = names[num];
+            bracletBooth.push_back(brac_name);
         }
         else
             cout << "No other updates\n";
@@ -249,6 +241,67 @@ int main() {
         cout << "---------" << endl;
         sim++;
     }
+    
+    // Soda Booth
+        list<string> sodaBooth;
+        string sod_name;
+
+        
+        for (int i = 0; i < 3; i++) {
+            random_device randNum;
+            uniform_int_distribution<int>range(0, 6);
+            int num = range(randNum);
+            
+            sod_name = names[num];
+            sodaBooth.push_back(sod_name);
+        }
+        cout << "---------\n";
+        
+        cout << "Soda Booth Initial cue:\n";
+        auto it = sodaBooth.begin();
+        for (int i = 0; i < sodaBooth.size(); i++) {
+            cout << *it << endl;
+            it++;
+        }
+        cout << "---------\n";
+        
+        for (int i = 0; i < 10; ++i) {
+            static int sim = 1;
+            
+            cout << "Time interval #" << sim << endl;
+            int event = rand_num();
+            cout << "[Updates]" << endl;
+            if (sodaBooth.size() > 0) {
+                auto it = sodaBooth.begin();
+                cout << *it << " helped\n";
+                sodaBooth.erase(it);
+            }
+            
+            
+            if (event < 50) {
+                random_device randNum;
+                uniform_int_distribution<int>range(0, 6);
+                int num = range(randNum);
+                
+                muf_name = names[num];
+                sodaBooth.push_back(muf_name);
+            }
+            else
+                cout << "No other updates\n";
+            
+            cout << "[Resulting Line]" << endl;
+            if (sodaBooth.size() != 0) {
+                auto it = sodaBooth.begin();
+                for (int i = 0; i < sodaBooth.size(); i++) {
+                    cout << *it << endl;
+                    it++;
+                }
+            }
+            else
+                cout << "Booth empty\n";
+            cout << "---------" << endl;
+            sim++;
+        }
     
     
     return 0;
