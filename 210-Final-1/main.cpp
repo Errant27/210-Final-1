@@ -3,6 +3,8 @@
 #include <iostream>
 #include <iomanip>
 #include <deque>
+#inlcude <vector>
+#include <list>
 #include <random>
 using namespace std;
 const int W = 3;
@@ -128,6 +130,7 @@ int main() {
         sim++;
     }
     
+    // Muffin Booth
     deque<string> muffinBooth;
     string muf_name;
 //    string muf_order;
@@ -140,7 +143,7 @@ int main() {
         int num = range(randNum);
         
         muf_name = names[num];
-//        muf_order = drinks[num];
+//        muf_order = muffins[num];
         muffinBooth.push_back(muf_name);
     }
     cout << "---------\n";
@@ -157,8 +160,10 @@ int main() {
         cout << "Time interval #" << sim << endl;
         int event = rand_num();
         cout << "[Updates]" << endl;
-        cout << muffinBooth[0] << " helped\n";
-        muffinBooth.pop_front();
+        if (muffinBooth.size() > 0) {
+            cout << muffinBooth[0] << " helped\n";
+            muffinBooth.pop_front();
+        }
         
         
         if (event < 50) {
@@ -174,9 +179,69 @@ int main() {
             cout << "No other updates\n";
         
         cout << "[Resulting Line]" << endl;
-        if (muffinBooth.size() > 0) {
+        if (muffinBooth.size() != 0) {
             for (int i = 0; i < muffinBooth.size(); i++) {
                 cout << muffinBooth[i] << endl;
+            }
+        }
+        else
+            cout << "Booth empty\n";
+        cout << "---------" << endl;
+        sim++;
+    }
+    
+    // Bracelet Booth
+    vector<string> bracletBooth;
+    string brac_name;
+//    string brac_order;
+    
+//    string bracelets[7] = {"Blueberry", "Strawberry", "Coffee", "Poppyseed", "Water", "Chocolate", "Hazelnut"};
+    
+    for (int i = 0; i < 3; i++) {
+        random_device randNum;
+        uniform_int_distribution<int>range(0, 6);
+        int num = range(randNum);
+        
+        brac_name = names[num];
+//        muf_order = muffins[num];
+        bracletBooth.push_back(brac_name);
+    }
+    cout << "---------\n";
+    
+    cout << "Bracelet Booth Initial cue:\n";
+    for (int i = 0; i < bracletBooth.size(); i++) {
+        cout << bracletBooth[i] << endl;
+    }
+    cout << "---------\n";
+    
+    for (int i = 0; i < 10; ++i) {
+        static int sim = 1;
+        
+        cout << "Time interval #" << sim << endl;
+        int event = rand_num();
+        cout << "[Updates]" << endl;
+        if (bracletBooth.size() > 0) {
+            cout << muffinBooth[0] << " helped\n";
+            bracletBooth.pop_back();
+        }
+        
+        
+        if (event < 50) {
+            random_device randNum;
+            uniform_int_distribution<int>range(0, 6);
+            int num = range(randNum);
+            
+            muf_name = names[num];
+    //        muf_order = muffins[num];
+            bracletBooth.push_back(muf_name);
+        }
+        else
+            cout << "No other updates\n";
+        
+        cout << "[Resulting Line]" << endl;
+        if (bracletBooth.size() != 0) {
+            for (int i = 0; i < bracletBooth.size(); i++) {
+                cout << bracletBooth[i] << endl;
             }
         }
         else
