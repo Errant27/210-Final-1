@@ -66,6 +66,19 @@ void help_customer() {
 
 };
 
+struct Customer {
+    string name;
+    string order;
+    Customer* next;
+    Customer(string na, string ord, Customer* n = nullptr) {
+        name = na;
+        order = ord;
+        next = n;
+    }
+};
+
+Customer *head;
+
 int main() {
     CoffeeBooth booth;
     string name;
@@ -115,7 +128,62 @@ int main() {
         sim++;
     }
     
+    deque<string> muffinBooth;
+    string muf_name;
+//    string muf_order;
     
+//    string muffins[7] = {"Blueberry", "Strawberry", "Coffee", "Poppyseed", "Water", "Chocolate", "Hazelnut"};
+    
+    for (int i = 0; i < 3; i++) {
+        random_device randNum;
+        uniform_int_distribution<int>range(0, 6);
+        int num = range(randNum);
+        
+        muf_name = names[num];
+//        muf_order = drinks[num];
+        muffinBooth.push_back(muf_name);
+    }
+    cout << "---------\n";
+    
+    cout << "Muffin Booth Initial cue:\n";
+    for (int i = 0; i < muffinBooth.size(); i++) {
+        cout << muffinBooth[i] << endl;
+    }
+    cout << "---------\n";
+    
+    for (int i = 0; i < 10; ++i) {
+        static int sim = 1;
+        
+        cout << "Time interval #" << sim << endl;
+        int event = rand_num();
+        cout << "[Updates]" << endl;
+        cout << muffinBooth[0] << " helped\n";
+        muffinBooth.pop_front();
+        
+        
+        if (event < 50) {
+            random_device randNum;
+            uniform_int_distribution<int>range(0, 6);
+            int num = range(randNum);
+            
+            muf_name = names[num];
+    //        muf_order = muffins[num];
+            muffinBooth.push_back(muf_name);
+        }
+        else
+            cout << "No other updates\n";
+        
+        cout << "[Resulting Line]" << endl;
+        if (muffinBooth.size() > 0) {
+            for (int i = 0; i < muffinBooth.size(); i++) {
+                cout << muffinBooth[i] << endl;
+            }
+        }
+        else
+            cout << "Booth empty\n";
+        cout << "---------" << endl;
+        sim++;
+    }
     
     
     return 0;
