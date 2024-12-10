@@ -30,7 +30,7 @@ void insert(string nam, string ord) {
     Customer *newCustomer = new Customer(nam, ord);
     if(!head) {
          head = newCustomer;
-        cout << setw(W) << newCustomer->name << " added to the line" << endl;
+        cout << setw(W) << newCustomer->name << " ordered a " << newCustomer->order << endl;
     }
     else {
         Customer *ptr = head;
@@ -38,7 +38,7 @@ void insert(string nam, string ord) {
             ptr = ptr->next;
         ptr->next = newCustomer;
         newCustomer->next = nullptr;
-        cout << setw(W) << newCustomer->name << " added to the line" << endl;
+        cout << setw(W) << newCustomer->name << " ordered a " << newCustomer->order << endl;
     }
 }
 
@@ -49,18 +49,16 @@ void print_booth() {
         return;
     }
     while (current) {
-        cout << current->name << " ordered a " << current->order << endl;
+        cout << current->name << endl;
         current = current->next;
     }
 }
 
 void help_customer() {
     Customer* current = head;
-    if(!head)
-        cout << "No update\n";
-    else {
+    if(head) {
         head = head->next;
-        cout << current->name << " helped from the front of the line\n";
+        cout << current->name << " helped\n";
         delete current;
         current = nullptr;
     }
@@ -73,12 +71,12 @@ int main() {
     string name;
     string order;
     
-    string names[5] = {"Daniel", "Erica", "Lily", "Monique", "Nathan"};
-    string drinks[5] = {"Coffee", "Latte", "Espresso", "Tea", "Drink"};
+    string names[7] = {"Daniel", "Erica", "Lily", "Monique", "Nathan", "Josh", "Tim"};
+    string drinks[7] = {"Coffee", "Latte", "Espresso", "Tea", "Water", "Cappacino", "Americano"};
     
     for (int i = 0; i < 3; i++) {
         random_device randNum;
-        uniform_int_distribution<int>range(0, 4);
+        uniform_int_distribution<int>range(0, 6);
         int num = range(randNum);
         
         name = names[num];
@@ -96,25 +94,28 @@ int main() {
         
         cout << "Time interval #" << sim << endl;
         int event = rand_num();
+        cout << "[Updates]" << endl;
         booth.help_customer();
-        
-        cout << "---------" << endl;
-        cout << "Updates:" << endl;
         
         if (event < 50) {
             random_device randNum;
-            uniform_int_distribution<int>range(0, 4);
+            uniform_int_distribution<int>range(0, 6);
             int num = range(randNum);
             
             name = names[num];
             order = drinks[num];
             booth.insert(name, order);
         }
+        else
+            cout << "No other updates\n";
         
-        cout << "Resulting Line:" << endl;
+        cout << "[Resulting Line]" << endl;
         booth.print_booth();
+        cout << "---------" << endl;
         sim++;
     }
+    
+    
     
     
     return 0;
